@@ -1,0 +1,24 @@
+.todo-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.todo-container .todo-item {
+  margin: 2rem 2rem;
+}
+
+.todo-title {
+  padding: 1rem 2rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--primary-color);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.todo-body {
+  background-color: #e0e7ff;
+  padding: 1rem 2rem;
+  border-bottom-left-radius: 0.1rem;
+  border-bottom-right-radius: 0.1rem;
+}

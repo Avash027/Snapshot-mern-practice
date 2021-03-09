@@ -1,31 +1,48 @@
 import express from "express";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import cors from "cors";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
-import postRoutes from "./routes/posts.js";
-
 const app = express();
-
-app.use("/posts", postRoutes);
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-
 const CONNECTION_URL = `${process.env.DATABASE_URL}`;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-mongoose
-  .connect(CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    app.listen(PORT, () => console.log(`Server running at port : ${PORT}`))
-  )
-  .catch((error) => console.log("Error: ", error.message));
+app.get("/api/blogs", (req, res) => {
+  console.log("Hello");
+  res.send({
+    code: 1,
+    data: [
+      {
+        title: "Title1",
+        description:
+          "This is data for title 1 and it is long This is data for title 1 and it is long  This is data for title 1 and it is long  This is data for title 1 and it is long This is data for title 1 and it is long This is data for title",
+      },
+      {
+        title: "Title2",
+        description:
+          "This is data of title 2 This is data for title 1 and it is long  This is data for title 1 and it is long This is data for title 1 and it is long This is data for title 1 and it is long This is data for title 1 and it is long ",
+      },
+      {
+        title: "Title3",
+        description:
+          "This is data for title 1 and it is long This is data for title 1 and it is long This is data for title 1 and it is long This is data for title 1 and it is long This is data for title 1 and it is longThis is data for title 1 a ",
+      },
+    ],
+  });
+});
 
-mongoose.set("useFindAndModify", false);
+// mongoose
+//   .connect(CONNECTION_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() =>
+//     app.listen(PORT, () => console.log(`Server running at port : ${PORT}`))
+//   )
+//   .catch((error) => console.log("Error: ", error.message));
+
+// mongoose.set("useFindAndModify", false);
+app.listen(PORT, () => console.log(`Server running at port : ${PORT}`));

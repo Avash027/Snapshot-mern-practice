@@ -1,34 +1,31 @@
-import React from "react";
-import { Container, AppBar, Typography, Grid, Grow } from "@material-ui/core";
-import Posts from "./Components/Posts/Posts";
-import Form from "./Components/Form/Form";
-import useStyles from "./Styles";
+import React, { useState } from "react";
+import Navbar from "./Components/Navbar/Navbar";
+import BlogInput from "./Components/BlogInput/Bloginput";
+import Blogs from "./Components/Blogs/Blogs";
 
 function App() {
-  const classes = useStyles();
+  const [BlogData, setBlogData] = useState([]);
+
+  useState(async () => {
+    const JSONData = await fetch("http://localhost:5000/api/blogs");
+    const data = await JSONData.json();
+    delete data.code;
+    console.log(typeof data);
+
+    setBlogData(data.data);
+  }, []);
+
+  let elem = "";
+  if (BlogData) {
+    elem = <Blogs data={BlogData} />;
+    console.log(BlogData);
+  }
   return (
-    <Container maxidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} variant="h3" align="center">
-          Snapshot
-        </Typography>
-      </AppBar>
-      <Grow in>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="stretch"
-          spacing={4}
-        >
-          <Grid item xs={12} sm={7}>
-            <Posts />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Form />
-          </Grid>
-        </Grid>
-      </Grow>
-    </Container>
+    <div>
+      <Navbar />
+      <BlogInput />
+      {elem}
+    </div>
   );
 }
 
